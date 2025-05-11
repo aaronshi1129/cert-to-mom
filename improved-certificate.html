@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Achievement</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f4f8;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .certificate {
+            background-color: #fff;
+            background-image: 
+                radial-gradient(circle at 10px 10px, rgba(200, 200, 200, 0.2) 2px, transparent 0),
+                radial-gradient(circle at 10px 10px, rgba(200, 200, 200, 0.2) 2px, transparent 0);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, transparent 70%);
+            z-index: 0;
+        }
+        .certificate::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, transparent 70%);
+            z-index: 0;
+        }
+        .certificate-title {
+            font-family: 'Playfair Display', serif;
+        }
+        .certificate-border {
+            border: 2px solid #c9a959;
+            background: linear-gradient(to right, #fff, #fffdf0, #fff);
+        }
+        .seal {
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+        .signature {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 1.8rem;
+            color: #2c3e50;
+        }
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .toast {
+            transition: all 0.3s ease;
+            transform: translateY(100px);
+            opacity: 0;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        input:focus {
+            outline: none;
+            border-bottom: 2px dotted #c9a959;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+            body {
+                background-color: white;
+            }
+            .certificate {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
+    <div class="max-w-4xl w-full">
+        <div id="certificate-container" class="certificate p-8 md:p-12 rounded-lg">
+            <div class="certificate-border p-6 md:p-10 rounded-md relative z-10">
+                <div class="text-center mb-6">
+                    <h1 class="certificate-title text-3xl md:text-5xl text-[#2c3e50] mb-2">Certificate of Achievement</h1>
+                    <p class="text-lg md:text-xl text-gray-600">This is to certify that</p>
+                </div>
+                
+                <div class="text-center my-8">
+                    <div class="relative inline-block">
+                        <input type="text" id="studentName" class="text-2xl md:text-4xl text-center font-semibold text-[#2c3e50] border-b-2 border-[#c9a959] px-4 py-2 bg-transparent w-full md:w-96" placeholder="Enter Student Name" autocomplete="off">
+                    </div>
+                </div>
+                
+                <div class="text-center my-8">
+                    <p class="text-lg md:text-xl text-gray-600">has successfully demonstrated outstanding performance and dedication</p>
+                    <p class="text-lg md:text-xl text-gray-600 mt-2">in completing the course with excellence</p>
+                </div>
+                
+                <div class="flex flex-col md:flex-row justify-between items-center mt-12">
+                    <div class="mb-6 md:mb-0">
+                        <div class="text-center">
+                            <p class="signature">Jane Smith</p>
+                            <div class="w-full h-0.5 bg-gray-300 my-2"></div>
+                            <p class="text-gray-600">Course Instructor</p>
+                        </div>
+                    </div>
+                    
+                    <div class="seal">
+                        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Outer circle with gradient -->
+                            <circle cx="60" cy="60" r="58" fill="url(#goldGradient)" />
+                            
+                            <!-- Inner circle -->
+                            <circle cx="60" cy="60" r="52" fill="#f8f3e2" />
+                            
+                            <!-- Decorative border pattern -->
+                            <path d="M60 8 
+                                A52 52 0 0 1 112 60
+                                A52 52 0 0 1 60 112
+                                A52 52 0 0 1 8 60
+                                A52 52 0 0 1 60 8
+                                Z" 
+                                stroke="#c9a959" 
+                                stroke-width="1.5"
+                                stroke-dasharray="3,2" 
+                                fill="none" />
+                            
+                            <!-- Decorative inner circle -->
+                            <circle cx="60" cy="60" r="40" stroke="#c9a959" stroke-width="1" fill="none" />
+                            
+                            <!-- Decorative rays -->
+                            <g stroke="#c9a959" stroke-width="1.5">
+                                <path d="M60 20 L60 100" />
+                                <path d="M20 60 L100 60" />
+                                <path d="M31.7 31.7 L88.3 88.3" />
+                                <path d="M31.7 88.3 L88.3 31.7" />
+                            </g>
+                            
+                            <!-- Central emblem -->
+                            <circle cx="60" cy="60" r="25" fill="url(#goldGradient)" />
+                            <circle cx="60" cy="60" r="22" fill="#f8f3e2" />
+                            
+                            <!-- Star shape -->
+                            <path d="M60 38 
+                                L64.7 52.3 
+                                L80 52.3 
+                                L67.6 61.4 
+                                L72.4 75.7 
+                                L60 66.6 
+                                L47.6 75.7 
+                                L52.4 61.4 
+                                L40 52.3 
+                                L55.3 52.3 Z" 
+                                fill="url(#goldGradient)" />
+                                
+                            <!-- Text around the seal -->
+                            <text font-family="serif" font-size="7" fill="#8b7229" text-anchor="middle">
+                                <textPath href="#textPath" startOffset="50%">EXCELLENCE • ACHIEVEMENT • DISTINCTION</textPath>
+                            </text>
+                            <path id="textPath" d="M60 22 A38 38 0 0 1 98 60 A38 38 0 0 1 60 98 A38 38 0 0 1 22 60 A38 38 0 0 1 60 22 Z" fill="none" />
+                            
+                            <!-- Gradients -->
+                            <defs>
+                                <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#e6c460" />
+                                    <stop offset="50%" stop-color="#c9a959" />
+                                    <stop offset="100%" stop-color="#b38728" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    
+                    <div class="mb-6 md:mb-0">
+                        <div class="text-center">
+                            <p class="signature">Robert Johnson</p>
+                            <div class="w-full h-0.5 bg-gray-300 my-2"></div>
+                            <p class="text-gray-600">Program Director</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-8">
+                    <p class="text-gray-500 italic">Awarded on <span id="currentDate"></span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-8 flex flex-col md:flex-row justify-center items-center gap-4 no-print">
+            <button id="copyLinkBtn" class="btn bg-[#3b82f6] hover:bg-[#2563eb] text-white font-medium py-2 px-6 rounded-full flex items-center gap-2 shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                Copy Shareable Link
+            </button>
+            
+            <button id="downloadBtn" class="btn bg-[#10b981] hover:bg-[#059669] text-white font-medium py-2 px-6 rounded-full flex items-center gap-2 shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download Certificate
+            </button>
+            
+            <button id="printBtn" class="btn bg-[#6366f1] hover:bg-[#4f46e5] text-white font-medium py-2 px-6 rounded-full flex items-center gap-2 shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2z" />
+                </svg>
+                Print Certificate
+            </button>
+        </div>
+    </div>
+    
+    <div id="toast" class="toast fixed bottom-4 right-4 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+        Link copied to clipboard!
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentNameInput = document.getElementById('studentName');
+            const copyLinkBtn = document.getElementById('copyLinkBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const printBtn = document.getElementById('printBtn');
+            const toast = document.getElementById('toast');
+            const currentDateElement = document.getElementById('currentDate');
+            
+            // Format and display current date
+            const today = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            currentDateElement.textContent = today.toLocaleDateString('en-US', options);
+            
+            // Check URL parameters for name
+            const urlParams = new URLSearchParams(window.location.search);
+            const nameParam = urlParams.get('name');
+            
+            if (nameParam) {
+                // Properly decode the name parameter
+                try {
+                    studentNameInput.value = decodeURIComponent(nameParam);
+                    studentNameInput.readOnly = true;
+                    studentNameInput.classList.add('pointer-events-none');
+                    studentNameInput.style.borderBottom = 'none';
+                } catch (e) {
+                    console.error('Error decoding name parameter:', e);
+                    // Fallback to raw value if decoding fails
+                    studentNameInput.value = nameParam;
+                }
+            }
+            
+            // Helper function to validate student name
+            function validateStudentName() {
+                const studentName = studentNameInput.value.trim();
+                if (!studentName) {
+                    alert('Please enter a student name first.');
+                    studentNameInput.focus();
+                    return false;
+                }
+                return studentName;
+            }
+            
+            // Copy link functionality
+            copyLinkBtn.addEventListener('click', function() {
+                const studentName = validateStudentName();
+                if (!studentName) return;
+                
+                try {
+                    // Get the base URL without query parameters
+                    const url = new URL(window.location.href.split('?')[0]);
+                    // Add the properly encoded name parameter
+                    url.searchParams.set('name', encodeURIComponent(studentName));
+                    
+                    // Copy to clipboard
+                    navigator.clipboard.writeText(url.toString())
+                        .then(() => {
+                            showToast('Link copied to clipboard!');
+                        })
+                        .catch(err => {
+                            console.error('Could not copy text: ', err);
+                            // Fallback for browsers that don't support clipboard API
+                            fallbackCopyTextToClipboard(url.toString());
+                        });
+                } catch (e) {
+                    console.error('Error creating URL:', e);
+                    alert('Failed to generate shareable link. Please try again.');
+                }
+            });
+            
+            // Fallback clipboard function for older browsers
+            function fallbackCopyTextToClipboard(text) {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';  // Avoid scrolling to bottom
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        showToast('Link copied to clipboard!');
+                    } else {
+                        alert('Failed to copy link. Please copy it manually: ' + text);
+                    }
+                } catch (err) {
+                    console.error('Error in fallback copy method:', err);
+                    alert('Failed to copy link. Please copy it manually: ' + text);
+                }
+                
+                document.body.removeChild(textArea);
+            }
+            
+            // Download certificate as image
+            downloadBtn.addEventListener('click', function() {
+                const studentName = validateStudentName();
+                if (!studentName) return;
+                
+                // Show loading state
+                downloadBtn.disabled = true;
+                downloadBtn.innerHTML = `
+                    <svg class="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Generating...
+                `;
+                
+                // Hide buttons during capture
+                const buttonsContainer = document.querySelector('.no-print');
+                const originalDisplay = buttonsContainer.style.display;
+                buttonsContainer.style.display = 'none';
+                
+                const certificateContainer = document.getElementById('certificate-container');
+                
+                // Use a timeout to ensure the UI updates before capture begins
+                setTimeout(() => {
+                    html2canvas(certificateContainer, {
+                        scale: 2, // Higher resolution
+                        useCORS: true,
+                        allowTaint: true,
+                        backgroundColor: '#ffffff',
+                        logging: false,
+                        // Improved rendering quality
+                        imageTimeout: 0, // No timeout
+                        removeContainer: false,
+                        windowWidth: window.innerWidth,
+                        windowHeight: window.innerHeight
+                    }).then(canvas => {
+                        // Show buttons again
+                        buttonsContainer.style.display = originalDisplay;
+                        
+                        // Create download link
+                        const link = document.createElement('a');
+                        link.download = `Certificate-${studentName.replace(/\s+/g, '-')}.png`;
+                        
+                        // Convert canvas to blob for better image quality
+                        canvas.toBlob(function(blob) {
+                            if (blob) {
+                                link.href = URL.createObjectURL(blob);
+                                link.click();
+                                // Release the object URL after some time
+                                setTimeout(() => URL.revokeObjectURL(link.href), 5000);
+                                showToast('Certificate downloaded!');
+                            } else {
+                                console.error('Failed to create blob from canvas');
+                                // Fallback to data URL if blob creation fails
+                                link.href = canvas.toDataURL('image/png');
+                                link.click();
+                                showToast('Certificate downloaded (reduced quality)!');
+                            }
+                        }, 'image/png', 1.0);
+                        
+                        // Reset button state
+                        downloadBtn.disabled = false;
+                        downloadBtn.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            Download Certificate
+                        `;
+                    }).catch(err => {
+                        console.error('Error generating certificate image:', err);
+                        alert('Failed to download certificate. Please try again or use the Print option.');
+                        
+                        // Reset UI state
+                        buttonsContainer.style.display = originalDisplay;
+                        downloadBtn.disabled = false;
+                        downloadBtn.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            Download Certificate
+                        `;
+                    });
+                }, 100);
+            });
+            
+            // Print certificate functionality
+            printBtn.addEventListener('click', function() {
+                const studentName = validateStudentName();
+                if (!studentName) return;
+                
+                window.print();
+            });
+            
+            // Toast notification function
+            function showToast(message) {
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+            
+            // Auto-focus the student name input if empty
+            if (!studentNameInput.value && !studentNameInput.readOnly) {
+                studentNameInput.focus();
+            }
+        });
+    </script>
+</body>
+</html>
